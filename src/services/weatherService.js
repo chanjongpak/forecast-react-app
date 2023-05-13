@@ -1,5 +1,6 @@
 import { DateTime } from "luxon";
 
+const API_KEY = "ec44db42e86ccacf832794b1b9fefaa0";
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
 
 const getWeatherData = (infoType, searchParams) => {
@@ -50,4 +51,12 @@ const getFormattedWeatherData = async (searchParams) => {
   return formattedCurrentWeather;
 };
 
+const formatToLocalTime = (
+  secs,
+  zone,
+  format = "cccc, dd LLL yyyy' | Local time: 'hh:mm:a"
+) => DateTime.fromSeconds(secs).setZone(zone).toFormat(format);
+
 export default getFormattedWeatherData;
+
+export { formatToLocalTime };
