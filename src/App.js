@@ -1,16 +1,15 @@
 import "./App.css";
 import React from "react";
-import UilReact from "@iconscout/react-unicons/icons/uil-react";
 import TopButtons from "./components/TopButtons";
 import Inputs from "./components/Inputs";
 import TimeAndLocation from "./components/TimeAndLocation";
 import TempAndDetails from "./components/TempAndDetails";
 import Forecast from "./components/Forecast";
-import getWeatherData from "./services/weatherService";
+import getFormattedWeatherData from "./services/weatherService";
 
 function App() {
   const fetchWeather = async () => {
-    const data = await getWeatherData("weather", { q: "amsterdam" });
+    const data = await getFormattedWeatherData({ q: "amsterdam" });
     console.log(data);
   };
 
