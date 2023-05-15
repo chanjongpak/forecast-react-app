@@ -5,6 +5,8 @@ import Inputs from "./components/Inputs";
 import TimeAndLocation from "./components/TimeAndLocation";
 import TempAndDetails from "./components/TempAndDetails";
 import getFormattedWeatherData from "./services/weatherService";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [query, setQuery] = useState({ q: "toronto" });
@@ -13,7 +15,13 @@ function App() {
 
   useEffect(() => {
     const fetchWeather = async () => {
+      const message = query.q ? query.q : "current location.";
+
+      toast.info("Getting data for " + message);
+
       await getFormattedWeatherData({ ...query, units }).then((data) => {
+        toast.success(`Got weather data for ${data.name}, ${data.country}`);
+
         setWeather(data);
       });
     };
@@ -49,6 +57,8 @@ function App() {
           <TempAndDetails weather={weather} />
         </>
       )}
+
+      <ToastContainer autoClose={1500} theme="colored" newestOnTop={true} />
     </div>
   );
 }
