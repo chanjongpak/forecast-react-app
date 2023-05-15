@@ -6,6 +6,26 @@ function Inputs({ setQuery, units, setUnits }) {
 
   const handleSearchButton = () => {
     if (city !== "") setQuery({ q: city });
+    setCity("");
+  };
+
+  const handleLocationButton = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        let lat = position.coords.latitude;
+        let lon = position.coords.longitude;
+
+        setQuery({
+          lat,
+          lon,
+        });
+      });
+    }
+  };
+
+  const handleUnitsButton = (e) => {
+    const selectedUnit = e.currentTarget.name;
+    if (units !== selectedUnit) setUnits(selectedUnit);
   };
 
   return (
@@ -25,6 +45,7 @@ function Inputs({ setQuery, units, setUnits }) {
         />
         <UilLocationPoint
           size={25}
+          onClick={handleLocationButton}
           className="text-white cursor-pointer transition ease-out hover:scale-125"
         />
       </div>
@@ -33,15 +54,15 @@ function Inputs({ setQuery, units, setUnits }) {
         <button
           name="metric"
           className="text-xl text-white font-light transition ease-out hover:scale-125"
-          onClick={() => setUnits("metric")}
+          onClick={handleUnitsButton}
         >
           °C
         </button>
         <p className="text-xl text-white mx-1">|</p>
         <button
-          name="empirical"
+          name="imperial"
           className="text-xl text-white font-light transition ease-out hover:scale-125"
-          onClick={() => setUnits("empirical")}
+          onClick={handleUnitsButton}
         >
           °F
         </button>
